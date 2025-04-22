@@ -1,0 +1,79 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from PIL import Image
+import os
+
+# Set up the Streamlit page config
+st.set_page_config(page_title="IPL Match Prediction Dashboard", layout="wide")
+
+# Title
+st.title("🏏 IPL Match Prediction - ML Dashboard")
+st.markdown("Visualizing model performance, feature importance, and match insights")
+
+# Load results
+def load_metrics():
+    with open("ml_results.txt", "r") as file:
+        content = file.read()
+    return content
+
+# Load images
+def load_image(image_path):
+    if os.path.exists(image_path):
+        return Image.open(image_path)
+    return None
+
+# Sidebar Navigation
+section = st.sidebar.radio("Navigate", [
+    "Model Performance", 
+    "Feature Importance", 
+    "Confusion Matrix", 
+    "Team Wins Distribution", 
+    "Toss Impact", 
+    "Raw Data"
+])
+
+# Display Sections
+if section == "Model Performance":
+    st.subheader("📊 Model Accuracy & CV Scores")
+    st.code(load_metrics(), language="text")
+    img = load_image("model_performance.png")
+    if img:
+        st.image(img, caption="Model Performance Comparison", use_column_width=True)
+
+elif section == "Feature Importance":
+    st.subheader("🌟 Feature Importance (Random Forest)")
+    img = load_image("feature_importance.png")
+    if img:
+        st.image(img, caption="Feature Importance", use_column_width=True)
+
+elif section == "Confusion Matrix":
+    st.subheader("🔍 Confusion Matrix - Best Model")
+    img = load_image("confusion_matrix.png")
+    if img:
+        st.image(img, caption="Confusion Matrix", use_column_width=True)
+
+elif section == "Team Wins Distribution":
+    st.subheader("🏆 Team Wins Distribution")
+    img = load_image("team_wins_distribution.png")
+    if img:
+        st.image(img, caption="Team Win Counts", use_column_width=True)
+
+elif section == "Toss Impact":
+    st.subheader("🪙 Toss Decision Impact on Match Outcome")
+    img = load_image("toss_impact.png")
+    if img:
+        st.image(img, caption="Toss Impact on Match Outcome", use_column_width=True)
+
+elif section == "Raw Data":
+    st.subheader("📄 Sample of Preprocessed Dataset")
+    try:
+        df = pd.read_csv("matches.csv")
+        st.dataframe(df.head(50))
+    except FileNotFoundError:
+        st.warning("⚠ Dataset not found. Please ensure matches.csv is in the current directory.")
+
+# Footer
+st.markdown("---")
+st.markdown("© 2025 | IPL ML Project by [Your Name] | Built with 💡 Streamlit")

@@ -1,0 +1,18 @@
+IPL Match Prediction Results
+==========================
+
+Random Forest:
+Test Accuracy: 0.4817
+CV Mean Accuracy: 0.3753
+CV Standard Deviation: 0.0367
+
+HistGradientBoosting:
+Test Accuracy: 0.5707
+CV Mean Accuracy: 0.5056
+CV Standard Deviation: 0.0396
+
+SVM:
+Test Accuracy: 0.2565
+CV Mean Accuracy: 0.2719
+CV Standard Deviation: 0.0435
+
